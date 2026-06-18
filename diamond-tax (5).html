@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diamond Tax and Financial Services</title>
+
+  <!-- ===== FUENTES DE GOOGLE ===== -->
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* =============================================
+       VARIABLES DE COLOR (basados en el logo)
+       ============================================= */
+    :root {
+      --navy:      #000a4d;      /* Azul marino oscuro (fondo principal) */
+      --navy-mid:  #1c2f7a;      /* Azul medio más claro (para cards) */
+      --gold:      #c9a227;      /* Dorado brillante */
+      --gold-light:#f0c94e;      /* Dorado claro para destellos */
+      --silver:    #d0d6e0;      /* Plateado (texto secundario) */
+      --white:     #ffffff;
+      --text-body: #b8c4d4;      /* Texto de párrafos */
+    }
+
+    /* =============================================
+       RESET Y BASE
+       ============================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Lato', sans-serif;
+      background-color: var(--navy);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* =============================================
+       BARRA DE NAVEGACIÓN
+       ============================================= */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 8%;
+      background: rgba(0, 10, 77, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(201, 162, 39, 0.25);
+    }
+
+    /* Logo en el nav */
+    .nav-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    /* Links del nav */
+    .nav-links { display: flex; gap: 32px; list-style: none; }
+    .nav-links a {
+      color: var(--silver);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: var(--gold-light); }
+
+    /* Botón CTA del nav */
+    .nav-cta {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy) !important;
+      padding: 10px 22px;
+      border-radius: 4px;
+      font-weight: 700 !important;
+      transition: opacity 0.3s !important;
+    }
+    .nav-cta:hover { opacity: 0.85; }
+
+    /* =============================================
+       SECCIÓN HERO (portada principal)
+       ============================================= */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 120px 8% 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Fondo con patrón de diamante */
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 40%, rgba(201,162,39,0.08) 0%, transparent 70%),
+        repeating-linear-gradient(
+          45deg,
+          transparent,
+          transparent 40px,
+          rgba(201,162,39,0.03) 40px,
+          rgba(201,162,39,0.03) 41px
+        );
+    }
+
+    /* Líneas decorativas detrás del hero */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -200px; right: -200px;
+      width: 600px; height: 600px;
+      border: 1px solid rgba(201,162,39,0.12);
+      border-radius: 50%;
+      animation: rotateSlow 30s linear infinite;
+    }
+
+    @keyframes rotateSlow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .hero-content { position: relative; z-index: 2; max-width: 820px; }
+
+    /* Etiqueta pequeña encima del título */
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      border: 1px solid rgba(201,162,39,0.4);
+      padding: 6px 18px;
+      border-radius: 50px;
+      margin-bottom: 28px;
+      animation: fadeDown 0.8s ease both;
+    }
+
+    /* Título principal */
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(2.6rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.1;
+      margin-bottom: 10px;
+      animation: fadeDown 0.9s ease 0.1s both;
+    }
+
+    /* Parte dorada del título */
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Subtítulo */
+    .hero-subtitle {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      letter-spacing: 5px;
+      color: var(--silver);
+      text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeDown 1s ease 0.2s both;
+    }
+
+    /* Línea decorativa dorada */
+    .divider {
+      width: 80px; height: 2px;
+      background: linear-gradient(to right, transparent, var(--gold), transparent);
+      margin: 0 auto 28px;
+      animation: fadeDown 1s ease 0.3s both;
+    }
+
+    /* Descripción del hero */
+    .hero p {
+      font-size: 1.05rem;
+      line-height: 1.8;
+      color: var(--text-body);
+      max-width: 620px;
+      margin: 0 auto 44px;
+      animation: fadeDown 1s ease 0.4s both;
+    }
+
+    /* Botones del hero */
+    .hero-btns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+      animation: fadeDown 1s ease 0.5s both;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: var(--navy);
+      padding: 15px 36px;
+      border: none;
+      border-radius: 4px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: transform 0.25s, box-shadow 0.25s;
+      box-shadow: 0 4px 24px rgba(201,162,39,0.35);
+    }
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 32px rgba(201,162,39,0.5);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--gold);
+      padding: 14px 36px;
+      border: 1px solid var(--gold);
+      border-radius: 4px;
+      font-family: 'Lato', sans-serif;
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      transition: background 0.25s, color 0.25s;
+    }
+    .btn-secondary:hover {
+      background: rgba(201,162,39,0.1);
+    }
+
+    /* Animación de entrada */
+    @keyframes fadeDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* =============================================
+       BAND DE ESTADÍSTICAS / HIGHLIGHTS
+       ============================================= */
+    .stats-band {
+      background: linear-gradient(135deg, var(--gold) 0%, #a07c1a 100%);
+      padding: 28px 8%;
+      display: flex;
+      justify-content: space-around;
+      flex-wrap: wrap;
+      gap: 20px;
+    }
+
+    .stat-item { text-align: center; }
+
+    .stat-item .number {
+      font-family: 'Cinzel', serif;
+      font-size: 2rem;
+      font-weight: 900;
+      color: var(--navy);
+    }
+
+    .stat-item .label {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(13,27,42,0.75);
+      margin-top: 4px;
+    }
+
+    /* =============================================
+       SECCIÓN DE SERVICIOS
+       ============================================= */
+    .services {
+      padding: 100px 8%;
+      background-color: var(--navy);
+    }
+
+    /* Encabezado de sección (reutilizable) */
+    .section-header {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    .section-tag {
+      display: inline-block;
+      font-size: 0.72rem;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .section-header h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+    }
+
+    .section-header h2 span { color: var(--gold); }
+
+    .section-header p {
+      color: var(--text-body);
+      max-width: 520px;
+      margin: 16px auto 0;
+      line-height: 1.8;
+    }
+
+    /* Grid de tarjetas de servicios */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 28px;
+    }
+
+    /* Tarjeta individual de servicio */
+    .service-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,162,39,0.15);
+      border-radius: 8px;
+      padding: 40px 30px;
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Línea dorada en hover */
+    .service-card::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
+      transition: width 0.4s;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: rgba(201,162,39,0.4);
+      box-shadow: 0 16px 40px rgba(0,0,0,0.4);
+    }
+    .service-card:hover::after { width: 100%; }
+
+    /* Ícono del servicio */
+    .service-icon {
+      width: 56px; height: 56px;
+      background: rgba(201,162,39,0.12);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 22px;
+      font-size: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Cinzel', serif;
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--gold-light);
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      line-height: 1.75;
+      color: var(--text-body);
+    }
+
+    /* =============================================
+       SECCIÓN "¿POR QUÉ ELEGIRNOS?"
+       ============================================= */
+    .why-us {
+      background: var(--navy);
+      padding: 100px 8%;
+      display: flex;
+      align-items: center;
+      gap: 80px;
+      flex-wrap: wrap;
+    }
+
+    .why-text { flex: 1; min-width: 280px; }
+
+    .why-text h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.6rem, 3.5vw, 2.5rem);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .why-text h2 span { color: var(--gold); }
+
+    .why-text p {
+      font-size: 1rem;
+      line-height: 1.85;
+      color: var(--text-body);
+      margin-bottom: 36px;
+    }
+
+    /* Lista de ventajas */
+    .benefits-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+
+    .benefits-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      font-size: 0.95rem;
+      color: var(--silver);
+    }
+
+    /* Checkmark dorado */
+    .benefits-list li::before {
+      content: '◆';
+      color: var(--gold);
+      font-size: 0.7rem;
+      margin-top: 5px;
+      flex-shrink: 0;
+    }
+
+    /* Panel de imagen / decorativo */
+    .why-visual {
+      flex: 1;
+      min-width: 280px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .why-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,162,39,0.2);
+      border-radius: 8px;
+      padding: 28px 22px;
+      text-align: center;
+    }
+
+    .why-card .big-num {
+      font-family: 'Cinzel', serif;
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: var(--gold);
+      display: block;
+    }
+
+    .why-card .why-label {
+      font-size: 0.78rem;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      color: var(--silver);
+      margin-top: 6px;
+      display: block;
+    }
+
+    /* Tarjeta grande (ocupa las 2 columnas) */
+    .why-card.wide { grid-column: span 2; }
+
+    /* =============================================
+       SECCIÓN "REPORTES BANCARIOS" (destaque especial)
+       ============================================= */
+    .reports {
+      padding: 100px 8%;
+      background: var(--navy);
+    }
+
+    /* Grid de reportes */
+    .reports-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      margin-top: 0;
+    }
+
+    .report-card {
+      background: var(--navy-mid);
+      border: 1px solid rgba(201,162,39,0.18);
+      border-radius: 8px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .report-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--gold);
+    }
+
+    .report-name {
+      font-family: 'Cinzel', serif;
+      font-size: 1.05rem;
+      color: var(--gold-light);
+      margin-bottom: 10px;
+    }
+
+    .report-card p {
+      font-size: 0.88rem;
+      color: var(--text-body);
+      line-height: 1.7;
+    }
+
+    /* =============================================
+       SECCIÓN CTA PRINCIPAL (CONTÁCTANOS)
+       ============================================= */
+    .cta-section {
+      background: var(--navy);
+      padding: 100px 8%;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(201,162,39,0.2);
+      border-bottom: 1px solid rgba(201,162,39,0.2);
+    }
+
+    /* Diamante decorativo de fondo */
+    .cta-section::before {
+      content: '◆';
+      position: absolute;
+      font-size: 40rem;
+      color: rgba(201,162,39,0.02);
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .cta-section h2 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .cta-section h2 span { color: var(--gold); }
+
+    .cta-section p {
+      font-size: 1rem;
+      color: var(--text-body);
+      max-width: 560px;
+      margin: 0 auto 44px;
+      line-height: 1.8;
+      position: relative;
+    }
+
+    /* Eslogan final */
+    .cta-slogan {
+      margin-top: 52px;
+      font-family: 'Cinzel', serif;
+      font-size: 1.1rem;
+      letter-spacing: 3px;
+      color: var(--gold);
+      position: relative;
+    }
+
+    /* =============================================
+       FOOTER
+       ============================================= */
+    footer {
+      background: var(--navy);
+      padding: 50px 8% 30px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+      border-top: 1px solid rgba(201,162,39,0.15);
+    }
+
+    .footer-logo {
+      font-family: 'Cinzel', serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 3px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .footer-links a {
+      color: var(--text-body);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      transition: color 0.3s;
+    }
+    .footer-links a:hover { color: var(--gold); }
+
+    .footer-copy {
+      font-size: 0.78rem;
+      color: rgba(184,196,212,0.45);
+      letter-spacing: 1px;
+    }
+
+    .footer-divider {
+      width: 40px; height: 1px;
+      background: var(--gold);
+      opacity: 0.4;
+    }
+
+    /* =============================================
+       RESPONSIVO — MÓVILES
+       ============================================= */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }   /* Oculta links en móvil (se puede agregar hamburger) */
+      .why-us { flex-direction: column; }
+      .stats-band { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- =============================================
+       NAVEGACIÓN FIJA
+       ============================================= -->
+  <nav>
+    <div class="nav-logo">DIAMOND <span style="color: var(--silver); font-weight: 400; font-size: 0.7rem; letter-spacing: 2px;">TAX &amp; FINANCIAL SERVICES</span></div>
+    <ul class="nav-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#reportes">Reportes</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto" class="nav-cta">Contáctanos</a></li>
+    </ul>
+  </nav>
+
+  <!-- =============================================
+       HERO — SECCIÓN PRINCIPAL
+       ============================================= -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-tag">Tu Crédito • Tu Reputación • Tu Futuro</span>
+      <h1><span>Diamond</span></h1>
+      <p class="hero-subtitle">Tax &amp; Financial Services</p>
+      <div class="divider"></div>
+      <p>
+        Te ayudamos a revisar, disputar y mejorar tu historial bancario para que puedas
+        volver a abrir cuentas en los bancos más importantes.
+        Soluciones reales, resultados que te abren puertas.
+      </p>
+      <div class="hero-btns">
+        <a href="#contacto" class="btn-primary">Empieza Hoy</a>
+        <a href="#servicios" class="btn-primary">Ver Servicios</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- =============================================
+       BANDA DE ESTADÍSTICAS
+       ============================================= -->
+  <div class="stats-band">
+    <div class="stat-item">
+      <div class="number">100%</div>
+      <div class="label">Confidencial</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">3</div>
+      <div class="label">Reportes Cubiertos</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">+500</div>
+      <div class="label">Clientes Ayudados</div>
+    </div>
+    <div class="stat-item">
+      <div class="number">Pro</div>
+      <div class="label">Orientación Profesional</div>
+    </div>
+  </div>
+
+  <!-- =============================================
+       SECCIÓN DE SERVICIOS
+       ============================================= -->
+  <section class="services" id="servicios">
+    <div class="section-header">
+      <span class="section-tag">◆ Lo que hacemos</span>
+      <h2>Nuestros <span>Servicios</span></h2>
+      <p>Ofrecemos soluciones integrales para recuperar tu acceso al sistema bancario y fortalecer tu estabilidad financiera.</p>
+    </div>
+
+    <div class="services-grid">
+
+      <!-- Tarjeta 1 -->
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3>Revisión Detallada</h3>
+        <p>Analizamos a fondo tu historial bancario para identificar cada error o registro negativo que te esté bloqueando el acceso.</p>
+      </div>
+
+      <!-- Tarjeta 2 -->
+      <div class="service-card">
+        <div class="service-icon">⚖️</div>
+        <h3>Disputas Legales</h3>
+        <p>Disputamos y eliminamos errores en tus reportes de CheckSystems, BISYS y LexisNexis para mejorar tus posibilidades de aprobación.</p>
+      </div>
+
+      <!-- Tarjeta 3 -->
+      <div class="service-card">
+        <div class="service-icon">🏦</div>
+        <h3>Acceso a Cuentas Bancarias</h3>
+        <p>Te ayudamos a volver a abrir cuentas en bancos importantes, recuperando el acceso a los servicios financieros que necesitas.</p>
+      </div>
+
+      <!-- Tarjeta 4 -->
+      <div class="service-card">
+        <div class="service-icon">📈</div>
+        <h3>Mejora tu Historial</h3>
+        <p>Trabajamos contigo para construir y fortalecer tu historial bancario, mejorando tu reputación financiera a largo plazo.</p>
+      </div>
+
+      <!-- Tarjeta 5 -->
+      <div class="service-card">
+        <div class="service-icon">💡</div>
+        <h3>Educación Financiera</h3>
+        <p>Te orientamos y educamos para que tomes mejores decisiones financieras y construyas un futuro económico más sólido.</p>
+      </div>
+
+      <!-- Tarjeta 6 -->
+      <div class="service-card">
+        <div class="service-icon">🛡️</div>
+        <h3>Estabilidad Financiera</h3>
+        <p>Nuestro objetivo final es ayudarte a recuperar tu estabilidad financiera completa, con soluciones reales y resultados duraderos.</p>
+      </div>
+
+      <!-- Tarjeta 7 -->
+      <div class="service-card">
+        <div class="service-icon">📝</div>
+        <h3>Notary Public</h3>
+        <p>Ofrecemos servicios de notarización para todo tipo de documentos legales, contratos y formularios oficiales con validez garantizada.</p>
+      </div>
+
+      <!-- Tarjeta 8 -->
+      <div class="service-card">
+        <div class="service-icon">🏢</div>
+        <h3>Registro de Empresas</h3>
+        <p>Te ayudamos a registrar tu negocio de forma correcta y eficiente, incluyendo LLC, corporaciones y cualquier estructura empresarial.</p>
+      </div>
+
+      <!-- Tarjeta 9 -->
+      <div class="service-card">
+        <div class="service-icon">📊</div>
+        <h3>Bookkeeping</h3>
+        <p>Mantenemos tus libros contables en orden, registrando ingresos, gastos y transacciones para que tu negocio siempre esté al día.</p>
+      </div>
+
+      <!-- Tarjeta 10 -->
+      <div class="service-card">
+        <div class="service-icon">🌎</div>
+        <h3>Servicios de Inmigración</h3>
+        <p>Brindamos orientación y asistencia con trámites migratorios, formularios y procesos para ayudarte a navegar el sistema de inmigración.</p>
+      </div>
+
+      <!-- Tarjeta 11 -->
+      <div class="service-card">
+        <div class="service-icon">🧾</div>
+        <h3>Taxes</h3>
+        <p>Preparamos y presentamos tus declaraciones de impuestos personales y de negocios con profesionalismo, maximizando tu reembolso.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECCIÓN DE REPORTES BANCARIOS
+       ============================================= -->
+  <section class="reports" id="reportes">
+    <div class="section-header">
+      <span class="section-tag">◆ Reportes</span>
+      <h2>Te Ayudamos con los <span>Reportes de</span></h2>
+      <p>Trabajamos directamente con los tres principales sistemas de reporte bancario en los Estados Unidos.</p>
+    </div>
+
+    <div class="reports-grid">
+
+      <!-- CheckSystems -->
+      <div class="report-card">
+        <div class="report-name">CheckSystems</div>
+        <p>Revisamos, disputamos y eliminamos errores en tu reporte de CheckSystems para mejorar tus posibilidades de aprobación bancaria.</p>
+      </div>
+
+      <!-- BISYS -->
+      <div class="report-card">
+        <div class="report-name">BISYS</div>
+        <p>Corregimos información negativa o desactualizada en tu reporte de BISYS que te impide abrir cuentas bancarias.</p>
+      </div>
+
+      <!-- LexisNexis -->
+      <div class="report-card">
+        <div class="report-name">LexisNexis</div>
+        <p>Analizamos y disputamos registros negativos en tu reporte de LexisNexis para que puedas acceder a servicios bancarios.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- =============================================
+       SECCIÓN ¿POR QUÉ ELEGIRNOS?
+       ============================================= -->
+  <section class="why-us" id="nosotros">
+
+    <!-- Texto izquierdo -->
+    <div class="why-text">
+      <span class="section-tag">◆ Por qué elegirnos</span>
+      <h2>Estamos de tu <span>lado</span></h2>
+      <p>
+        Entendemos que los problemas bancarios pueden afectar todas las áreas de tu vida.
+        Por eso trabajamos con dedicación para darte las herramientas y el respaldo que necesitas
+        para recuperar tu acceso al sistema financiero.
+      </p>
+      <ul class="benefits-list">
+        <li>Servicio 100% confidencial y profesional</li>
+        <li>Orientación personalizada en cada caso</li>
+        <li>Resultados reales que abren puertas</li>
+        <li>Experiencia con los 3 principales reportes bancarios</li>
+        <li>Educación financiera incluida en el proceso</li>
+      </ul>
+    </div>
+
+    <!-- Panel de números / métricas decorativas -->
+    <div class="why-visual">
+      <div class="why-card">
+        <span class="big-num">3</span>
+        <span class="why-label">Sistemas de reporte</span>
+      </div>
+      <div class="why-card">
+        <span class="big-num">100%</span>
+        <span class="why-label">Confidencial</span>
+      </div>
+      <div class="why-card wide">
+        <span class="big-num">◆</span>
+        <span class="why-label">Tu crédito · Tu reputación · Tu futuro</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- =============================================
+       SECCIÓN CALL TO ACTION / CONTACTO
+       ============================================= -->
+  <section class="cta-section" id="contacto">
+    <h2>¿Listo para <span>recuperar</span> tu acceso?</h2>
+    <p>
+      Déjanos ayudarte a volver a tener acceso al sistema bancario.
+      Nuestro equipo profesional está listo para guiarte en cada paso del camino.
+    </p>
+    <div class="hero-btns">
+      <a href="tel:+15512869870" class="btn-primary">📞 Llámanos Ahora</a>
+      <a href="mailto:diamondbymariellc@hotmail.com" class="btn-primary">✉ Escríbenos</a>
+    </div>
+    <p class="cta-slogan">Estamos para ayudarte.</p>
+  </section>
+
+  <!-- =============================================
+       FOOTER
+       ============================================= -->
+  <footer>
+    <div class="footer-logo">◆ Diamond Tax &amp; Financial Services</div>
+    <div class="footer-divider"></div>
+    <ul class="footer-links">
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#reportes">Reportes Bancarios</a></li>
+      <li><a href="#nosotros">Nosotros</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+    <p class="footer-copy">© 2025 Diamond Tax and Financial Services. Todos los derechos reservados.</p>
+  </footer>
+
+</body>
+</html>
